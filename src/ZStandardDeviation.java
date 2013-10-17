@@ -1,19 +1,19 @@
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 
 public class ZStandardDeviation extends TechnicalModule<Float> {
-	int length;
+	int period;
 
-	public ZStandardDeviation(int length) {
-		super("standardDeviation"+String.valueOf(length));
-		this.length = length;
+	public ZStandardDeviation(int period) {
+		super("std"+String.valueOf(period));
+		this.period = period;
 	}
 
 	@Override
 	public Float calculate(int row) {
-		double[] dou = new double[length * 4];
+		double[] dou = new double[period * 4];
 		int x=0;
 		try {
-			for (int i = row - length + 1; i <= row; i++){
+			for (int i = row - period + 1; i <= row; i++){
 				dou[x++]=D.getFloChecked("open", i);
 				dou[x++]=D.getFloChecked("high", i);
 				dou[x++]=D.getFloChecked("low", i);

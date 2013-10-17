@@ -16,17 +16,23 @@ public class Worker implements Runnable {
 			readInputData();
 			addTechnicalIndicator(new ZStandardDeviation(5));
 			addTechnicalIndicator(new ZStandardDeviation(20));
+			addTechnicalIndicator(new ZMovingAverage(ZMovingAverage.ALL, 20));
+			addTechnicalIndicator(new ZBollingerBandPercentage(ZBollingerBandPercentage.MID));
 			for (int i = 0; i < d.getLength(); i++) {
-				System.out.println(
-//						d.getStr("date", i) + "\t" +
-//						d.getFlo("volume", i) + "\t" +
-						d.getFlo("open", i) + "\t" +
-								d.getFlo("high", i) + "\t" +
-								d.getFlo("low", i) + "\t" +
-								d.getFlo("close", i) + "\t"
-//								d.getFlo("standardDeviation5", i) + "\t" +
-//								d.getFlo("standardDeviation20", i)
-				);
+				try {
+					System.out.println(
+	//						d.getStr("date", i) + "\t" +
+	//						d.getFlo("volume", i) + "\t" +
+							d.getFlo("open", i) + "\t" +
+									d.getFlo("high", i) + "\t" +
+									d.getFlo("low", i) + "\t" +
+									d.getFlo("close", i) + "\t"+
+									String.valueOf(d.getFlo("maA20", i) + 2.0 * d.getFlo("std20", i)) + "\t"+
+									String.valueOf(d.getFlo("maA20", i) - 2.0 * d.getFlo("std20", i)) + "\t"+
+									d.getFlo("bollM", i)
+					);
+				} catch (Exception e) {
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
